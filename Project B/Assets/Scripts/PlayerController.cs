@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+	[Header("Values")]
 	[SerializeField] float speed;
 	[SerializeField] float jumpForce;
 	float moveInput;
@@ -17,6 +18,9 @@ public class PlayerController : MonoBehaviour
 	bool facingRight = true;
 	[SerializeField] Collider2D feetCollider;
 	[SerializeField] LayerMask groundLayer;
+	
+	[Header("Attacks")]
+	[SerializeField] PlayerAttack[] attacks;
 	
 	Rigidbody2D rb;
 	
@@ -32,7 +36,17 @@ public class PlayerController : MonoBehaviour
 		
 		Jump();
 		SetCoyoteTime();
-		
+		JumpBuffer();
+		AttackNormal();
+	}
+	
+	void FixedUpdate() 
+	{
+		MoveAndFlip();
+	}
+	
+	void JumpBuffer()
+	{
 		if(Input.GetButtonDown("Jump"))
 		{
 			jumpBufferTimeCounter = jumpBufferTime;
@@ -40,11 +54,6 @@ public class PlayerController : MonoBehaviour
 		{
 			jumpBufferTimeCounter -= Time.deltaTime;
 		}
-	}
-	
-	void FixedUpdate() 
-	{
-		MoveAndFlip();
 	}
 	
 	void MoveAndFlip()
@@ -99,6 +108,14 @@ public class PlayerController : MonoBehaviour
 	bool IsGrounded()
 	{
 		return feetCollider.IsTouchingLayers(groundLayer);
+	}
+	
+	void AttackNormal()
+	{
+		if(Input.GetButtonDown("Fire1") && !attacks[0].GetComponent<BoxCollider2D>().enabled)
+		{
+			attacks[0].ActivateAttack();
+		}
 	}
 	/* 
 		O que fazer no código:
