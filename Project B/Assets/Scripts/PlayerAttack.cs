@@ -29,9 +29,10 @@ public class PlayerAttack : MonoBehaviour
 		GetComponent<SpriteRenderer>().enabled = true;
 	}
 	
-	void DeactivateAttack()
+	public void DeactivateAttack()
 	{
 		GetComponent<BoxCollider2D>().enabled = false;
 		GetComponent<SpriteRenderer>().enabled = false;
+		FindObjectOfType<PlayerController>().Unlock();
 	}
 }
