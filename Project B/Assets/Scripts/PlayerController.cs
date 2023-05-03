@@ -19,23 +19,31 @@ public class PlayerController : MonoBehaviour
 	bool facingRight = true;
 	[SerializeField] Collider2D feetCollider;
 	[SerializeField] LayerMask groundLayer;
-	bool isLocked;
-
-	[Header("Attacks")]
-	[SerializeField] PlayerAttack[] attacks;
+	[SerializeField] bool isLocked;
+	
+	[Header("Prefabs")]
+	[SerializeField] GameObject atkOnePrefab;
+	[SerializeField] GameObject currentHitbox;
+	
+	[Header("HitBox Transforms")]
+	[SerializeField] Transform atkOneTransform;
 
 
 	Rigidbody2D rb;
+	Animator animator;
 
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
 	}
 
 	void Update()
 	{
 		moveInput = Input.GetAxisRaw("Horizontal");
+		animator.SetBool("attacked", Input.GetButtonDown("Fire1"));
+		animator.SetBool("grounded", IsGrounded());
 
 		Jump();
 		SetCoyoteTime();
@@ -142,28 +150,9 @@ public class PlayerController : MonoBehaviour
 
 	void AttackNormal()
 	{
-		if (Input.GetButtonDown("Fire1") && !attacks[0].GetComponent<BoxCollider2D>().enabled
-		&& !attacks[1].GetComponent<BoxCollider2D>().enabled &&
-		!attacks[2].GetComponent<BoxCollider2D>().enabled && IsGrounded())
+		if (Input.GetButtonDown("Fire1") && IsGrounded())
 		{
-			attacks[0].ActivateAttack();
 			isLocked = true;
-			rb.velocity = Vector2.zero;
-		}
-		else if (Input.GetButtonDown("Fire1") && attacks[0].GetComponent<BoxCollider2D>().enabled
-		&& IsGrounded())
-		{
-			attacks[0].DeactivateAttack();
-			isLocked = true;
-			attacks[1].ActivateAttack();
-			rb.velocity = Vector2.zero;
-		}
-		else if (Input.GetButtonDown("Fire1") && attacks[1].GetComponent<BoxCollider2D>().enabled
-		&& IsGrounded())
-		{
-			attacks[1].DeactivateAttack();
-			isLocked = true;
-			attacks[2].ActivateAttack();
 			rb.velocity = Vector2.zero;
 		}
 	}
@@ -172,9 +161,38 @@ public class PlayerController : MonoBehaviour
 	{
 		isLocked = false;
 	}
+	
+	public void ActivateHitBoxOne()
+	{
+		float posYDif = -0.042f;
+		
+		GameObject atk = Instantiate(atkOnePrefab);
+		if(facingRight)
+		{
+			atk.transform.position = new Vector2(this.transform.position.x + 0.622f, 
+				this.transform.position.y + posYDif);
+		}else
+		{
+			atk.transform.position = new Vector2(this.transform.position.x - 0.87f, 
+				this.transform.position.y + posYDif);
+		}
+
+		
+		if(currentHitbox != null)
+		{
+			Destroy(currentHitbox.gameObject);
+		}
+		
+		currentHitbox = atk;
+	}
+	
+	public void DestroyCurrentHitBox()
+	{
+		Destroy(currentHitbox.gameObject);
+	}
 	/* 
 		O que fazer no código:
-		-Fazer com q o movimento no ar seja por AddForce;
+		
 	
 		Bugs conhecidos:
 		- o pulo bufferado sempre vai com força total se o player soltar o botao de pulo rapido;

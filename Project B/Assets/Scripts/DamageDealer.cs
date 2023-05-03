@@ -13,7 +13,7 @@ public class DamageDealer : MonoBehaviour
 	
 	private void OnTriggerEnter2D(Collider2D other) 
 	{
-		Debug.Log("Contact made");
+		Debug.Log("Contact made:" + other.name);
 		if(other.GetComponent<LifeManager>())
 		{
 			other.GetComponent<LifeManager>().CalculateDamage(this);
