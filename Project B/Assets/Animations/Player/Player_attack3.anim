@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_attack1
+  m_Name: Player_attack3
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,11 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 1871674578834246284, guid: f70077eaa4d998c47908d1e9eeb659c7, type: 3}
-    - time: 0.083333336
+    - time: 0.18333334
       value: {fileID: 3090173003755996115, guid: f70077eaa4d998c47908d1e9eeb659c7, type: 3}
-    - time: 0.13333334
+    - time: 0.23333333
       value: {fileID: 8403341588387058359, guid: f70077eaa4d998c47908d1e9eeb659c7, type: 3}
-    - time: 0.28333333
+    - time: 0.6166667
       value: {fileID: 8403341588387058359, guid: f70077eaa4d998c47908d1e9eeb659c7, type: 3}
     attribute: m_Sprite
     path: Body
@@ -55,7 +55,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.3
+    m_StopTime: 0.6333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -76,27 +76,20 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: Lock
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
     functionName: ResetNormals
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.083333336
-    functionName: ActivateHitBoxOne
+  - time: 0.18333334
+    functionName: ActivateHitBoxThree
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.13333334
+  - time: 0.23333333
     functionName: DestroyCurrentHitBox
     data: 
     objectReferenceParameter: {fileID: 0}

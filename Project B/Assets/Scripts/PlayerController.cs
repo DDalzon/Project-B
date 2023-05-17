@@ -20,13 +20,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] Collider2D feetCollider;
 	[SerializeField] LayerMask groundLayer;
 	[SerializeField] bool isLocked;
-	
-	[Header("Prefabs")]
-	[SerializeField] GameObject atkOnePrefab;
-	[SerializeField] GameObject currentHitbox;
-	
-	[Header("HitBox Transforms")]
-	[SerializeField] Transform atkOneTransform;
 
 
 	Rigidbody2D rb;
@@ -147,6 +140,11 @@ public class PlayerController : MonoBehaviour
 	{
 		return feetCollider.IsTouchingLayers(groundLayer);
 	}
+	
+	public bool IsFacingRight()
+	{
+		return facingRight;
+	}
 
 	void AttackNormal()
 	{
@@ -154,42 +152,28 @@ public class PlayerController : MonoBehaviour
 		{
 			isLocked = true;
 			rb.velocity = Vector2.zero;
+			animator.SetInteger("attacks", animator.GetInteger("attacks")+1);
 		}
 	}
 
 	public void Unlock()
 	{
 		isLocked = false;
+		Debug.LogWarning("Player Unlocked!");
 	}
 	
-	public void ActivateHitBoxOne()
+	public void Lock()
 	{
-		float posYDif = -0.042f;
-		
-		GameObject atk = Instantiate(atkOnePrefab);
-		if(facingRight)
-		{
-			atk.transform.position = new Vector2(this.transform.position.x + 0.622f, 
-				this.transform.position.y + posYDif);
-		}else
-		{
-			atk.transform.position = new Vector2(this.transform.position.x - 0.87f, 
-				this.transform.position.y + posYDif);
-		}
-
-		
-		if(currentHitbox != null)
-		{
-			Destroy(currentHitbox.gameObject);
-		}
-		
-		currentHitbox = atk;
+		isLocked = true;
+		Debug.LogWarning("Player Locked!");
 	}
 	
-	public void DestroyCurrentHitBox()
+	public void ResetNormals()
 	{
-		Destroy(currentHitbox.gameObject);
+		animator.SetInteger("attacks", 0);
 	}
+	
+	
 	/* 
 		O que fazer no código:
 		
